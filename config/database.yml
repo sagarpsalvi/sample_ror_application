@@ -1,0 +1,25 @@
+default: &default
+   adapter: mysql2
+   encoding: utf8
+   collation: utf8_general_ci
+
+development:
+   adapter: mysql2
+   encoding: utf8
+   database: library_development
+   username: root
+   password: fr3sca
+
+test:
+   adapter: mysql2
+   encoding: utf8
+   database: library_test
+   username: root
+   password: fr3sca
+
+production:
+   adapter: mysql2
+   encoding: utf8
+   database: library_production
+   username: root
+   password: fr3sca
