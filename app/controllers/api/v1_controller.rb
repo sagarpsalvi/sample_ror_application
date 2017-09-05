@@ -3,8 +3,6 @@ class Api::V1Controller < ApplicationController
 
 
   def clauses
-    #Currently used dummy data
-    #will change after sometime
     case request.method_symbol
       when :get
         if params[:id]
@@ -41,7 +39,6 @@ class Api::V1Controller < ApplicationController
 
         if data['title'].to_s.empty?
           is_title = true
-          puts '###%s'%data['title'].to_s.empty?
         end
 
         if is_title
