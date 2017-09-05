@@ -80,6 +80,8 @@ class Api::V1Controller < ApplicationController
             @clauses.update_column(:clause_text, data['tag'] )
           end
 
+          @clauses.update_column(:is_locked, false)
+          @clauses.update_column(:locked_by, '')
           render :json => @clauses
         rescue Exception => e
           puts e.message
