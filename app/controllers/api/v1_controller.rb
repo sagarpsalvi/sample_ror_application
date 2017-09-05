@@ -1,8 +1,8 @@
 require 'json'
 class Api::V1Controller < ApplicationController
 
-
   def clauses
+    puts '############'
     case request.method_symbol
       when :get
         if params[:id]
@@ -46,7 +46,6 @@ class Api::V1Controller < ApplicationController
         end
         #
 
-
         if is_clause or is_title
           error['error'] = error_description + '\n' + error_title
           render :json => error
@@ -64,10 +63,32 @@ class Api::V1Controller < ApplicationController
             render :json => @clauses
           end
         end
+      when :put
+        begin
+          data = JSON.parse(request.body.read)
+          @clauses = Clause.where(is_delete: false).find(data['id'])
+
+          if data.has_key?("clause_text")
+            @clauses.update_column(:clause_text, data['clause_text'] )
+          end
+
+          if data.has_key?('title')
+            @clauses.update_column(:title, data['title'])
+          end
+
+          if data.has_key?("tag")
+            @clauses.update_column(:clause_text, data['tag'] )
+          end
+
+          render :json => @clauses
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+          render :json => {'error' => 'Clause not found'}
+        end
       when :delete
         begin
-          puts params[:id]
-          @clauses = Clause.find(params[:id])
+          @clauses = Clause.where(is_delete: false).find(params[:id])
           @clauses.update_column(:is_delete, true )
           render :json =>  {'message' => 'clauses deleted successfully'}
         rescue Exception => e
@@ -78,6 +99,26 @@ class Api::V1Controller < ApplicationController
 
     end
 
+  end
+
+  def clauses_locked
+    case request.method_symbol
+      when :post
+        begin
+          @clauses = Clause.where(is_delete: false).find(params[:id])
+          data = JSON.parse(request.body.read)
+          @clauses.update_column(:is_locked, data['is_locked'])
+          @clauses.update_column(:locked_by, data['locked_by'])
+          render :json => @clauses
+        rescue Exception => e
+          puts e.message
+          puts e.backtrace.inspect
+          render :json => {'error' => 'Clause not found'}
+        end
+      when :get
+        @clauses = Clause.where(is_delete: false, is_locked: true)
+        render :json => @clauses
+    end
   end
 
   def document

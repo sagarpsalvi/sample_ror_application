@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170901104142) do
+ActiveRecord::Schema.define(version: 20170905091441) do
 
   create_table "clauses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "tag"
     t.string "clause_text"
     t.string "title"
     t.boolean "is_delete", default: false
+    t.boolean "is_locked", default: false
+    t.string "locked_by", default: " "
   end
 
   create_table "documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|

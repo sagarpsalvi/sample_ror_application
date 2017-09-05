@@ -14,8 +14,13 @@ Rails.application.routes.draw do
 	get 'api/v1/clauses'
 	post 'api/v1/clauses'
 	delete 'api/v1/clauses'
+	put 'api/v1/clauses'
+  get 'api/v1/clauses_locked'
+  post 'api/v1/clauses_locked'
+
   #
   get 'api/v1/document'
   post 'api/v1/document'
   delete 'api/v1/document'
+
 end
