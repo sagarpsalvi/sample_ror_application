@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170830161233) do
+ActiveRecord::Schema.define(version: 20170901104142) do
 
   create_table "clauses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "tag"
     t.string "clause_text"
     t.string "title"
+    t.boolean "is_delete", default: false
+  end
+
+  create_table "documents", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+    t.string "title", limit: 32, null: false
+    t.text "document"
+    t.datetime "created_at", null: false
+    t.boolean "is_delete", default: false
+    t.datetime "updated_at", null: false
   end
 
 end
